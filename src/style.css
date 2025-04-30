@@ -1,0 +1,236 @@
+:root {
+  font-family: 'Noto Serif SC', 'Times New Roman', serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #000000;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Color palette */
+  --primary-dark: #0a0a0f;
+  --primary-light: #ffffff;
+  --accent-blue: #3a4a9b;
+  --accent-cyan: #2dd9da;
+  --accent-purple: #8a2be2;
+  --text-shadow: 0 0 10px rgba(45, 217, 218, 0.8);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+#loading-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--primary-dark);
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(58, 74, 155, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(45, 217, 218, 0.1) 0%, transparent 40%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  transition: opacity 1.5s ease-in-out;
+}
+
+.loading-content {
+  text-align: center;
+  animation: pulse 3s infinite alternate;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.95; }
+  100% { transform: scale(1.02); opacity: 1; }
+}
+
+.loading-content h1 {
+  font-size: 4em;
+  margin-bottom: 0.2em;
+  color: var(--primary-light);
+  letter-spacing: 0.15em;
+  text-shadow: var(--text-shadow);
+  animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+  0% { text-shadow: 0 0 5px rgba(45, 217, 218, 0.5); }
+  100% { text-shadow: 0 0 20px rgba(45, 217, 218, 0.8), 0 0 30px rgba(45, 217, 218, 0.6); }
+}
+
+.loading-content h2 {
+  font-size: 1.6em;
+  margin-bottom: 2.5em;
+  color: #bbbbbb;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+}
+
+.loading-bar-container {
+  width: 350px;
+  height: 6px;
+  background-color: rgba(30, 30, 40, 0.6);
+  border-radius: 4px;
+  margin: 0 auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  position: relative;
+}
+
+.loading-bar-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: shimmer 1.5s infinite;
+  transform: translateX(-100%);
+}
+
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
+}
+
+.loading-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+  border-radius: 4px;
+  transition: width 0.3s ease-in-out;
+  box-shadow: 0 0 8px rgba(45, 217, 218, 0.6);
+}
+
+#info {
+  position: absolute;
+  bottom: 25px;
+  width: 100%;
+  text-align: center;
+  color: var(--primary-light);
+  font-size: 0.95em;
+  opacity: 0;
+  z-index: 10;
+  background: linear-gradient(90deg, transparent, rgba(10, 10, 15, 0.6), transparent);
+  padding: 10px 0;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+  transform: translateY(20px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+#info.visible {
+  opacity: 0.85;
+  transform: translateY(0);
+}
+
+#info p {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(45, 217, 218, 0.3);
+  box-shadow: 0 0 10px rgba(45, 217, 218, 0.2);
+}
+
+/* Compass indicator */
+#compass {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 30px;
+  background-color: rgba(10, 10, 15, 0.6);
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--primary-light);
+  font-size: 0.8em;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 1s ease-out;
+  border: 1px solid rgba(45, 217, 218, 0.3);
+  box-shadow: 0 0 10px rgba(45, 217, 218, 0.2);
+}
+
+#compass.visible {
+  opacity: 0.85;
+}
+
+#compass-marker {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 2px;
+  height: 15px;
+  background-color: var(--accent-cyan);
+  box-shadow: 0 0 5px var(--accent-cyan);
+}
+
+#compass-directions {
+  position: relative;
+  width: 180px;
+  height: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.compass-label {
+  position: absolute;
+  transform: translateX(-50%);
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
+}
+
+/* Vignette effect */
+#vignette {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+  background: radial-gradient(circle, transparent 60%, rgba(0, 0, 0, 0.6) 100%);
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+}
+
+#vignette.visible {
+  opacity: 1;
+}
+
+.hidden {
+  opacity: 0 !important;
+  pointer-events: none;
+}

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>孤城回响 | Echoes of the Lonely City</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="app">
+      <div id="loading-screen">
+        <div class="loading-content">
+          <h1>孤城回响</h1>
+          <h2>Echoes of the Lonely City</h2>
+          <div class="loading-bar-container">
+            <div class="loading-bar"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Compass UI element -->
+      <div id="compass">
+        <div id="compass-directions">
+          <span class="compass-label" style="left: 0%;">W</span>
+          <span class="compass-label" style="left: 25%;">N</span>
+          <span class="compass-label" style="left: 50%;">E</span>
+          <span class="compass-label" style="left: 75%;">S</span>
+          <span class="compass-label" style="left: 100%;">W</span>
+        </div>
+        <div id="compass-marker"></div>
+      </div>
+
+      <!-- Controls info -->
+      <div id="info">
+        <p>WASD - 移动 | 鼠标 - 视角</p>
+      </div>
+
+      <!-- Vignette effect overlay -->
+      <div id="vignette"></div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
